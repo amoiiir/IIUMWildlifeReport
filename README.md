@@ -1,5 +1,3 @@
-# IIUMWildlifeReport
-##Final Assessment Project
 <h1>IIUM Wildlife Report</h1>
 
 <h2>Introduction</h2>
