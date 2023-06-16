@@ -15,6 +15,7 @@ Listed here is the main objectives of each of the project
 + They can approve each of the report and delete completed report.
 
 <h2>Features and Functionalities</h2>
+
 + Wildlife Reporting: Students can use their device's camera to capture and submit reports of wildlife-related problems they encounter on the IIUM campus. This feature allows them to document and describe the issue in detail.
 + Report Storage: The app securely stores the submitted wildlife reports in Firebase's cloud Firestore. This ensures that the data is safely stored and easily accessible for further processing.
 + Officer Assignment: Each submitted report is automatically assigned to a respective officer in-charge responsible for handling the complaint. This feature ensures that the appropriate personnel are notified promptly to address the wildlife issue.
