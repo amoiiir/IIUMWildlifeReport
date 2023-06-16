@@ -21,6 +21,7 @@ Listed here is the main objectives of each of the project
 + Officer Assignment: Each submitted report is automatically assigned to a respective officer in-charge responsible for handling the complaint. This feature ensures that the appropriate personnel are notified promptly to address the wildlife issue.
 
 <h2>Sequence Diagram</h2>
+
 ![mobileapp drawio](https://github.com/amoiiir/IIUMWildlifeReport/assets/101052053/fed87221-4991-4913-a543-97072a697880)
 
 
