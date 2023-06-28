@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1099280477586",
+    "project_id": "amircuba-6df42",
+    "storage_bucket": "amircuba-6df42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099280477586:android:40943901223daa6e16a54b",
+        "android_client_info": {
+          "package_name": "com.example.wildlifego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099280477586-csvnlu85jrq29sdooacjj1i3t77at7o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpfnfzAwut4YQUF8jO1Lde9qQ4QJZSoJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1099280477586-csvnlu85jrq29sdooacjj1i3t77at7o7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
