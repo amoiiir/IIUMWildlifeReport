@@ -24,4 +24,8 @@ Listed here is the main objectives of each of the project
 
 ![mobileapp drawio](https://github.com/amoiiir/IIUMWildlifeReport/assets/101052053/fed87221-4991-4913-a543-97072a697880)
 
+<h2>Screen implementatio and widget Diagrams</h2>
+
+<h2>References</h2>
+
 
