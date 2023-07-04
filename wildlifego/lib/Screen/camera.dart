@@ -40,7 +40,33 @@ class _CameraPageState extends State<CameraPage> {
       appBar: AppBar(
         title: const Text("Issue Report"),
       ),
-      body: CameraPreview(widget.cameraController),
+      body: Stack(
+        children: <Widget>[
+          CameraPreview(widget.cameraController),
+        Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          margin: const EdgeInsets.only(bottom:30),
+          child : FloatingActionButton.large(
+            backgroundColor: Colors.white,
+        child: const Icon(Icons.camera, color: Colors.black, size: 40,),
+        onPressed: () async {
+          await widget.cameraController.takePicture();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => CameraScreen(
+          //       imagePath: imagePath,
+          //     ),
+          //   ),
+          // );
+        },
+      ),
+        ),
+      ),
+
+        ],
+      ),
       // Additional UI or functionality can be added here
     );
   }

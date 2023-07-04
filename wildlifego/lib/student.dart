@@ -55,7 +55,7 @@ class _StudentState extends State<Student> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Student"),
+        title: const Text("WildLife GO"),
         actions: [
           IconButton(
             onPressed: () {
