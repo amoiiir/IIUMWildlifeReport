@@ -28,4 +28,9 @@ Listed here is the main objectives of each of the project
 
 <h2>References</h2>
 
+1. Role based login for Firebase with Flutter : https://youtu.be/q5E8811Ut_8
+2. Flutter: Bottom Tab Bar Navigation with FAB Button : https://youtu.be/1y-gfskpMIM
+3. Camera plug-ins : https://pub.dev/packages/camera
+4. Authentication plug-ins : https://pub.dev/packages/firebase_auth
+
 
