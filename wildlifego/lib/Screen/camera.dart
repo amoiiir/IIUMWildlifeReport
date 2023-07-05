@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/Screen/camera_screen.dart';
@@ -43,32 +45,34 @@ class _CameraPageState extends State<CameraPage> {
       body: Stack(
         children: <Widget>[
           CameraPreview(widget.cameraController),
-        Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          margin: const EdgeInsets.only(bottom:30),
-          child : FloatingActionButton.large(
-            backgroundColor: Colors.white,
-        child: const Icon(Icons.camera, color: Colors.black, size: 40,),
-        onPressed: () async {
-          final XFile imagePath = await widget.cameraController.takePicture();
-          await widget.cameraController.takePicture();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DisplayPictureScreen(
-                imagePath: imagePath.toString(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              child: FloatingActionButton.large(
+                backgroundColor: Colors.white,
+                child: const Icon(
+                  Icons.camera,
+                  color: Colors.black,
+                  size: 40,
+                ),
+                onPressed: () async {
+                  final XFile imageFile =
+                      await widget.cameraController.takePicture();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(
+                        imageFile: File(imageFile.path),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          );
-        },
-      ),
-        ),
-      ),
-
+          ),
         ],
       ),
-      // Additional UI or functionality can be added here
     );
   }
 }
