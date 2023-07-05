@@ -51,15 +51,16 @@ class _CameraPageState extends State<CameraPage> {
             backgroundColor: Colors.white,
         child: const Icon(Icons.camera, color: Colors.black, size: 40,),
         onPressed: () async {
+          final XFile imagePath = await widget.cameraController.takePicture();
           await widget.cameraController.takePicture();
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => CameraScreen(
-          //       imagePath: imagePath,
-          //     ),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DisplayPictureScreen(
+                imagePath: imagePath.toString(),
+              ),
+            ),
+          );
         },
       ),
         ),

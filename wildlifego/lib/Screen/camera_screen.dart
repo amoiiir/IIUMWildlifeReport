@@ -36,26 +36,26 @@ class DisplayPictureScreen extends StatelessWidget {
         width: 1080,
         height: 1920,
         child: GestureDetector(
-          // child: Stack(
-          //   children: [
-          //     Expanded(
-          //       child: Image.file(File(imagePath)),
-          //     ),
-          //     const SizedBox(height: 10),
-          //     Align(
-          //         alignment: Alignment.bottomCenter,
-          //         child: Container(
-          //             margin: const EdgeInsets.only(bottom: 20),
-          //             alignment: Alignment.bottomCenter,
-          //             child: FloatingActionButton.large(
-          //               backgroundColor: Colors.white,
-          //               onPressed: () async {
-          //                 uploadFile();
-          //               },
-          //               child: const Icon(Icons.upload, color: Colors.black),
-          //             ))),
-          //   ],
-          // ),
+          child: Stack(
+            children: [
+              Expanded(
+                child: Image.file(File(imagePath)),
+              ),
+              const SizedBox(height: 10),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      alignment: Alignment.bottomCenter,
+                      child: FloatingActionButton.large(
+                        backgroundColor: Colors.white,
+                        onPressed: () async {
+                          //uploadFile();
+                        },
+                        child: const Icon(Icons.upload, color: Colors.black),
+                      ))),
+            ],
+          ),
           onDoubleTap: () {
             Navigator.pop(context);
           },

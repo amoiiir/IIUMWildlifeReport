@@ -1,11 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'register.dart';
 
+List<CameraDescription> cameras = [];
+List<Widget> imageWidgets = [];
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -22,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue[900],
+        primaryColor: Color.fromARGB(255, 51, 55, 85),
       ),
       home: const Register(),
     );
