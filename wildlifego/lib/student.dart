@@ -37,7 +37,7 @@ class _StudentState extends State<Student> {
 
   Future<void> initializeCamera() async {
     cameras = await availableCameras();
-    _cameraController = CameraController(cameras[0], ResolutionPreset.medium);
+    _cameraController = CameraController(cameras[0], ResolutionPreset.ultraHigh);
     await _cameraController.initialize();
     if (!mounted) return;
     setState(() {

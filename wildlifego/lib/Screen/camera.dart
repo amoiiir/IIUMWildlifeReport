@@ -44,7 +44,11 @@ class _CameraPageState extends State<CameraPage> {
       ),
       body: Stack(
         children: <Widget>[
-          CameraPreview(widget.cameraController),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child:CameraPreview(widget.cameraController),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
