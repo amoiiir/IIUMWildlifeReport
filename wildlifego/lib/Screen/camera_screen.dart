@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import 'form_screen.dart';
+
 class DisplayPictureScreen extends StatelessWidget {
   final File imageFile;
 
@@ -12,15 +14,14 @@ class DisplayPictureScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Picture Preview')),
       body: Container(
-        width: 1080,
-        height: 1920,
         child: GestureDetector(
           child: Stack(
             children: [
-              Expanded(
-                child: Image.file(imageFile),
-              ),
-              const SizedBox(height: 10),
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Image.file(imageFile),
+                ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -29,9 +30,16 @@ class DisplayPictureScreen extends StatelessWidget {
                   child: FloatingActionButton.large(
                     backgroundColor: Colors.white,
                     onPressed: () async {
-                      //uploadFile();
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FormScreen(
+                          imageFile: File(imageFile.path),
+                        ),
+                      ),
+                    );
                     },
-                    child: const Icon(Icons.upload, color: Colors.black),
+                    child: const Icon(Icons.done, color: Colors.black),
                   ),
                 ),
               ),

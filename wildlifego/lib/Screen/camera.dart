@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/Screen/camera_screen.dart';
@@ -47,36 +46,72 @@ class _CameraPageState extends State<CameraPage> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            child:CameraPreview(widget.cameraController),
+            child: CameraPreview(widget.cameraController),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 30),
-              child: FloatingActionButton.large(
-                backgroundColor: Colors.white,
-                child: const Icon(
-                  Icons.camera,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                onPressed: () async {
-                  final XFile imageFile =
-                      await widget.cameraController.takePicture();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DisplayPictureScreen(
-                        imageFile: File(imageFile.path),
-                      ),
-                    ),
-                  );
-                },
-              ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child : Align(
+            alignment: Alignment.center,
+            child: CustomPaint(
+              painter: GridLinePainter(),
+              child: Container(),
             ),
           ),
+          ),
+          Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 30),
+          child: FloatingActionButton.large(
+            backgroundColor: Colors.white,
+            child: const Icon(
+              Icons.camera,
+              color: Colors.black,
+              size: 40,
+            ),
+            onPressed: () async {
+              final XFile imageFile =
+                  await widget.cameraController.takePicture();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DisplayPictureScreen(
+                    imageFile: File(imageFile.path),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
         ],
       ),
     );
   }
+}
+
+class GridLinePainter extends CustomPainter {
+  final Paint gridPaint = Paint()
+    ..color = Colors.white
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.0;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double width = size.width;
+    final double height = size.height;
+    final double cellWidth = width / 3;
+    final double cellHeight = height / 3;
+
+    for (int i = 1; i < 3; i++) {
+      final double x = cellWidth * i;
+      final double y = cellHeight * i;
+      canvas.drawLine(Offset(x, 0), Offset(x, height), gridPaint);
+      canvas.drawLine(Offset(0, y), Offset(width, y), gridPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(GridLinePainter oldDelegate) => false;
 }
