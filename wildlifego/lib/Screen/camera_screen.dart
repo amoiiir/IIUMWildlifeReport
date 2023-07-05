@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:wildlifego/googleMaps.dart';
 
 import 'form_screen.dart';
 
@@ -35,8 +36,8 @@ class DisplayPictureScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => FormScreen(
                           imageFile: File(imageFile.path),
-                        ),
                       ),
+                      )
                     );
                     },
                     child: const Icon(Icons.done, color: Colors.black),
