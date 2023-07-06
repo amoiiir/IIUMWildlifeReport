@@ -4,13 +4,20 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 
 class Teacher extends StatefulWidget {
-  const Teacher({super.key});
+  const Teacher({Key? key});
 
   @override
   State<Teacher> createState() => _TeacherState();
 }
 
 class _TeacherState extends State<Teacher> {
+  int _selectedTabIndex = 0;
+
+  final List<Widget> _pages = [
+    HomePage(),
+    ReportsPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,26 @@ class _TeacherState extends State<Teacher> {
             icon: const Icon(
               Icons.logout,
             ),
-          )
+          ),
+        ],
+      ),
+      body: _pages[_selectedTabIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTabIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedTabIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment),
+            label: 'Reports',
+          ),
         ],
       ),
     );
@@ -38,6 +64,24 @@ class _TeacherState extends State<Teacher> {
       MaterialPageRoute(
         builder: (context) => const LoginPage(),
       ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Home Page'),
+    );
+  }
+}
+
+class ReportsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Reports Page'),
     );
   }
 }
