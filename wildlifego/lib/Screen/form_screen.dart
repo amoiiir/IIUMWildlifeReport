@@ -1,10 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:wildlifego/main.dart';
 
-class FormScreen extends StatelessWidget {
+class FormScreen extends StatefulWidget {
   final File imageFile;
 
   const FormScreen({Key? key, required this.imageFile}) : super(key: key);
+
+  @override
+  _FormScreenState createState() => _FormScreenState();
+}
+
+class _FormScreenState extends State<FormScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String? _title;
+  String? _animalType;
+  String? _location;
+  String? _description;
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +28,16 @@ class FormScreen extends StatelessWidget {
             child: Column(
               children: [
                 Center(
-                  //heightFactor: 1.5,
                   child: Container(
                     width: 256,
-                    height : 256,
+                    height: 256,
                     child: Image.file(
-                      imageFile,
+                      widget.imageFile,
                     ),
                   ),
                 ),
                 Form(
-                  key: key,
+                  key: _formKey,
                   child: Column(
                     children: [
                       Padding(
@@ -36,6 +47,9 @@ class FormScreen extends StatelessWidget {
                             labelText: 'Title',
                             border: OutlineInputBorder(),
                           ),
+                          onSaved: (value) {
+                            _title = value;
+                          },
                         ),
                       ),
                       Padding(
@@ -45,6 +59,9 @@ class FormScreen extends StatelessWidget {
                             labelText: 'Animal Type',
                             border: OutlineInputBorder(),
                           ),
+                          onSaved: (value) {
+                            _animalType = value;
+                          },
                         ),
                       ),
                       Padding(
@@ -54,6 +71,9 @@ class FormScreen extends StatelessWidget {
                             labelText: 'Location',
                             border: OutlineInputBorder(),
                           ),
+                          onSaved: (value) {
+                            _location = value;
+                          },
                         ),
                       ),
                       Padding(
@@ -64,6 +84,9 @@ class FormScreen extends StatelessWidget {
                             border: OutlineInputBorder(),
                           ),
                           maxLines: 3,
+                          onSaved: (value) {
+                            _description = value;
+                          },
                         ),
                       ),
                       Align(
@@ -73,8 +96,18 @@ class FormScreen extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           child: FloatingActionButton.large(
                             backgroundColor: Colors.white,
-                            onPressed: () async {
-                              // Handle form submission
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                Report myReport = Report(
+                                  title: _title!,
+                                  animalType: _animalType!,
+                                  location: _location!,
+                                  description: _description!,
+                                  imageFile: widget.imageFile,
+                                );
+                                print('Submitted report: $myReport\nTitle: ${myReport.title}\nAnimal Type: ${myReport.animalType}\nLocation: ${myReport.location}\nDescription: ${myReport.description}\nImage File: ${myReport.imageFile}');
+                              }
                             },
                             child: const Icon(Icons.done, color: Colors.black),
                           ),

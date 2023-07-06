@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,24 @@ import 'register.dart';
 
 List<CameraDescription> cameras = [];
 List<Widget> imageWidgets = [];
+
+class Report {
+  final String title;
+  final String animalType;
+  final String location;
+  final String description;
+  final File imageFile;
+
+  Report({
+    required this.title,
+    required this.animalType,
+    required this.location,
+    required this.description,
+    required this.imageFile,
+  });
+}
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
