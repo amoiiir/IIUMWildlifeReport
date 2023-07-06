@@ -30,7 +30,7 @@ class FormScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Title',
@@ -39,7 +39,7 @@ class FormScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Animal Type',
@@ -48,7 +48,7 @@ class FormScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Location',
@@ -57,7 +57,7 @@ class FormScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Description',
