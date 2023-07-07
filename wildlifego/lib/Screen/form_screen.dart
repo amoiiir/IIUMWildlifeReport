@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/main.dart';
+import 'package:wildlifego/reportCard.dart';
 
 class FormScreen extends StatefulWidget {
   final File imageFile;
@@ -106,6 +107,12 @@ class _FormScreenState extends State<FormScreen> {
                                   description: _description!,
                                   imageFile: widget.imageFile,
                                 );
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReportPage(report: myReport),
+                                ),
+                              );
                                 print('Submitted report: $myReport\nTitle: ${myReport.title}\nAnimal Type: ${myReport.animalType}\nLocation: ${myReport.location}\nDescription: ${myReport.description}\nImage File: ${myReport.imageFile}');
                               }
                             },

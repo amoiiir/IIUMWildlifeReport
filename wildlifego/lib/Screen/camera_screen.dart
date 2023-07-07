@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:wildlifego/googleMaps.dart';
+import 'package:wildlifego/reportCard.dart';
 
 import 'form_screen.dart';
 
