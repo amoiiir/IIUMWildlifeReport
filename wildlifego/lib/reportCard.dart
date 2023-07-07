@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'main.dart';
 
 class ReportPage extends StatelessWidget {
@@ -13,28 +12,34 @@ class ReportPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Report Details'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.file(
-              report.imageFile,
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-            Text(
-              'Title: ${report.title}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text('Animal Type: ${report.animalType}'),
-            const SizedBox(height: 8),
-            Text('Location: ${report.location}'),
-            const SizedBox(height: 8),
-            Text('Description: ${report.description}'),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[200], // Set the desired background color
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.file(
+                report.imageFile,
+                width: double.infinity,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Title: ${report.title}',
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text('Animal Type: ${report.animalType}'),
+              const SizedBox(height: 8),
+              Text('Location: ${report.location}'),
+              const SizedBox(height: 8),
+              Text('Description: ${report.description}'),
+            ],
+          ),
         ),
       ),
     );
