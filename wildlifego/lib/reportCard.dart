@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wildlifego/student.dart';
 import 'main.dart';
 
 class ReportPage extends StatelessWidget {
@@ -38,6 +39,31 @@ class ReportPage extends StatelessWidget {
               Text('Location: ${report.location}'),
               const SizedBox(height: 8),
               Text('Description: ${report.description}'),
+
+              //Button to confirm and submit report and go to student.dart
+             Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                alignment: Alignment.bottomCenter,
+                child: FloatingActionButton.large(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(                      
+
+                      // Navigate to the Student page
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Student(),
+                      ),
+                    );
+                  },
+                  child: const Icon(Icons.upload, color: Colors.black),
+                ),
+              ),
+            ),
+
+              
             ],
           ),
         ),
