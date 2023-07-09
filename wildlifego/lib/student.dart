@@ -37,7 +37,8 @@ class _StudentState extends State<Student> {
 
   Future<void> initializeCamera() async {
     cameras = await availableCameras();
-    _cameraController = CameraController(cameras[0], ResolutionPreset.ultraHigh);
+    _cameraController =
+        CameraController(cameras[0], ResolutionPreset.ultraHigh);
     await _cameraController.initialize();
     if (!mounted) return;
     setState(() {
@@ -73,7 +74,8 @@ class _StudentState extends State<Student> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CameraPage(cameraController: _cameraController),
+              builder: (context) =>
+                  CameraPage(cameraController: _cameraController),
             ),
           );
         },
@@ -98,7 +100,7 @@ class _StudentState extends State<Student> {
                         // currentTab = 0;
                       });
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -122,7 +124,7 @@ class _StudentState extends State<Student> {
                         // currentTab = 0;
                       });
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -140,32 +142,39 @@ class _StudentState extends State<Student> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-  stream: FirebaseFirestore.instance.collection('AllReports').snapshots(),
-  builder: (context, snapshot) {
-    if (snapshot.hasData) {
-      final reports = snapshot.data!.docs;
-      return ListView.builder(
-        itemCount: reports.length,
-        itemBuilder: (context, index) {
-          final report = reports[index].data();
-          final imageURL = report['imageURL'] as String?; // Handle null value
-          final title = report['title'] as String?; // Handle null value
-          final details = report['details'] as String?; // Handle null value
+        stream: FirebaseFirestore.instance.collection('AllReports').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final reports = snapshot.data!.docs;
+            return ListView.builder(
+              itemCount: reports.length,
+              itemBuilder: (context, index) {
+                final report = reports[index].data();
+                final imageURL =
+                    report['imageURL'] as String?; // Handle null value
+                final title = report['title'] as String?; // Handle null value
+                final details =
+                    report['details'] as String?; // Handle null value
 
-          return ListTile(
-            leading: imageURL != null ? Image.network(imageURL) : const SizedBox(),
-            title: Text(title ?? 'No Title'),
-            subtitle: Text(details ?? 'No Details'),
-          );
+                return Card(
+                  elevation: 2,
+                  child: ListTile(
+                    leading: imageURL != null
+                        ? Image.network(imageURL)
+                        : const SizedBox(),
+                    title: Text(title ?? 'No Title'),
+                    subtitle: Text(details ?? 'No Details'),
+                  ),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error retrieving data');
+          } else {
+            return const CircularProgressIndicator();
+          }
         },
-      );
-    } else if (snapshot.hasError) {
-      return Text('Error retrieving data');
-    } else {
-      return const CircularProgressIndicator();
-    }
-  },
-),
+      ),
     );
   }
 }

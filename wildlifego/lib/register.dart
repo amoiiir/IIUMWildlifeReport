@@ -31,7 +31,7 @@ class _RegisterState extends State<Register> {
   File? file;
   var options = [
     'Student',
-    'Teacher',
+    'Admin',
   ];
   var _currentItemSelected = "Student";
   var rool = "Student";
@@ -39,12 +39,12 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[200],
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.lightGreen[400],
+              color: Colors.lightBlue[200],
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
@@ -63,7 +63,7 @@ class _RegisterState extends State<Register> {
                           "Register Now",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 238, 255, 4),
+                            color: Color.fromRGBO(0, 0, 0, 1),
                             fontSize: 40,
                           ),
                         ),
