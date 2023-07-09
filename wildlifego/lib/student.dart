@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/login.dart';
@@ -7,14 +8,13 @@ import 'Screen/camera.dart';
 import 'login.dart';
 
 class Student extends StatefulWidget {
-  const Student({super.key});
+  const Student({Key? key}) : super(key: key);
 
   @override
   State<Student> createState() => _StudentState();
 }
 
 Future<void> logout(BuildContext context) async {
-  const CircularProgressIndicator();
   await FirebaseAuth.instance.signOut();
   Navigator.pushReplacement(
     context,
@@ -71,11 +71,11 @@ class _StudentState extends State<Student> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    CameraPage(cameraController: _cameraController),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraPage(cameraController: _cameraController),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),
@@ -86,58 +86,86 @@ class _StudentState extends State<Student> {
         child: Container(
           height: 60.0,
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                    // crossAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      MaterialButton(
-                        minWidth: 150,
-                        onPressed: () {
-                          setState(() {
-                            // currentScreen = const Home();
-                            // currentTab = 0;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.home,
-                              color: Colors.blueGrey,
-                            ),
-                            Text('Home')
-                          ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: [
+                  MaterialButton(
+                    minWidth: 150,
+                    onPressed: () {
+                      setState(() {
+                        // currentScreen = const Home();
+                        // currentTab = 0;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.home,
+                          color: Colors.blueGrey,
                         ),
-                      )
-                    ]),
-                //right tab bar icons
-                Row(
-                    // crossAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      MaterialButton(
-                        minWidth: 150,
-                        onPressed: () {
-                          setState(() {
-                            // currentScreen = const Home();
-                            // currentTab = 0;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.assignment,
-                              color: Colors.blueGrey,
-                            ),
-                            Text('My Reports')
-                          ],
+                        Text('Home')
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              //right tab bar icons
+              Row(
+                children: [
+                  MaterialButton(
+                    minWidth: 150,
+                    onPressed: () {
+                      setState(() {
+                        // currentScreen = const Home();
+                        // currentTab = 0;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.assignment,
+                          color: Colors.blueGrey,
                         ),
-                      )
-                    ])
-              ]),
+                        Text('My Reports')
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+  stream: FirebaseFirestore.instance.collection('AllReports').snapshots(),
+  builder: (context, snapshot) {
+    if (snapshot.hasData) {
+      final reports = snapshot.data!.docs;
+      return ListView.builder(
+        itemCount: reports.length,
+        itemBuilder: (context, index) {
+          final report = reports[index].data();
+          final imageURL = report['imageURL'] as String?; // Handle null value
+          final title = report['title'] as String?; // Handle null value
+          final details = report['details'] as String?; // Handle null value
+
+          return ListTile(
+            leading: imageURL != null ? Image.network(imageURL) : const SizedBox(),
+            title: Text(title ?? 'No Title'),
+            subtitle: Text(details ?? 'No Details'),
+          );
+        },
+      );
+    } else if (snapshot.hasError) {
+      return Text('Error retrieving data');
+    } else {
+      return const CircularProgressIndicator();
+    }
+  },
+),
     );
   }
 }
