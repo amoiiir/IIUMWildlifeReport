@@ -5,7 +5,6 @@ import 'package:wildlifego/login.dart';
 import 'package:camera/camera.dart';
 
 import 'Screen/camera.dart';
-import 'login.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
