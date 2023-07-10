@@ -168,6 +168,35 @@ class ReportDetailsPage extends StatefulWidget {
 class _ReportDetailsPageState extends State<ReportDetailsPage> {
   bool isFinished = false;
 
+  Future<void> deleteReport() async {
+    try {
+      // Get a reference to the document in the "AllReports" collection
+      final reportCollection =
+          FirebaseFirestore.instance.collection('AllReports');
+
+      // Query the collection to find the document with matching title
+      final querySnapshot =
+          await reportCollection.where('title', isEqualTo: widget.title).get();
+
+      // Get the reference to the document found in the query
+      final documentId = querySnapshot.docs.first.id;
+      final reportRef = reportCollection.doc(documentId);
+
+      // Delete the document
+      await reportRef.delete();
+
+      // Show a snackbar or display a message to indicate successful deletion
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Report deleted')),
+      );
+    } catch (e) {
+      // Handle any errors that occur during deletion
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to delete report')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,39 +227,46 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
             Text('Details: ${widget.description}'),
             const SizedBox(height: 16),
             // Text('Location: ${widget.location}'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: SwipeableButtonView(
-                  buttonText: "Done Inspections",
-                  buttonWidget: Container(
-                    child: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color.fromARGB(255, 0, 140, 255),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: SwipeableButtonView(
+                    buttonText: "Done Inspections",
+                    buttonWidget: Container(
+                      child: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color.fromARGB(255, 0, 140, 255),
+                      ),
+                    ),
+                    activeColor: const Color.fromARGB(255, 0, 140, 255),
+                    isFinished: isFinished,
+                    onWaitingProcess: () {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        setState(() {
+                          isFinished = true;
+                        });
+                      });
+                    },
+                    onFinish: () async {
+                      await deleteReport(); // Call the delete function
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Teacher(),
+                        ),
+                      );
+                    },
+                    buttontextstyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  activeColor: const Color.fromARGB(255, 0, 140, 255),
-                  isFinished: isFinished,
-                  onWaitingProcess: () {
-                    Future.delayed(const Duration(seconds: 2), () {
-                      setState(() {
-                        isFinished = true;
-                      });
-                    });
-                  },
-                  onFinish: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Teacher(),
-                      ),
-                    );
-                  },
-                  buttontextstyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  )),
-            )
+                ),
+              ),
+            ),
           ],
         ),
       ),

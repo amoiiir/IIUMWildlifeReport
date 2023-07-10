@@ -56,7 +56,7 @@ class _StudentState extends State<Student> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("WildLife GO"),
+        title: const Text("WildLifeGO"),
         actions: [
           IconButton(
             onPressed: () {
@@ -152,7 +152,7 @@ class _StudentState extends State<Student> {
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Pending Reports',
+                    'My Reports',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
