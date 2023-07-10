@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:wildlifego/reportCard.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 
 import 'form_screen.dart';
@@ -20,7 +18,7 @@ class DisplayPictureScreen extends StatelessWidget {
         child: GestureDetector(
           child: Stack(
             children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: double.infinity,
                   child: Image.file(imageFile),

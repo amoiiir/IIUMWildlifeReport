@@ -74,7 +74,7 @@ class _FormScreenState extends State<FormScreen> {
                       LinearProgressIndicator(value: _progress, minHeight: 20),
                 ),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 256,
                     height: 256,
                     child: Image.file(
@@ -90,7 +90,7 @@ class _FormScreenState extends State<FormScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Title',
                             border: OutlineInputBorder(),
                           ),
@@ -102,7 +102,7 @@ class _FormScreenState extends State<FormScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Animal Type',
                             border: OutlineInputBorder(),
                           ),
@@ -114,7 +114,7 @@ class _FormScreenState extends State<FormScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Location',
                             border: OutlineInputBorder(),
                           ),
@@ -126,7 +126,7 @@ class _FormScreenState extends State<FormScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Description',
                             border: OutlineInputBorder(),
                           ),

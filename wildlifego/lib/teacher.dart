@@ -16,8 +16,8 @@ class _TeacherState extends State<Teacher> {
   int _selectedTabIndex = 0;
 
   final List<Widget> _pages = [
-    HomePage(),
-    ReportsPage(),
+    const HomePage(),
+    const ReportsPage(),
   ];
 
   @override
@@ -71,6 +71,8 @@ class _TeacherState extends State<Teacher> {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -100,8 +102,10 @@ class HomePage extends StatelessWidget {
                         report['imageURL'] as String?; // Handle null value
                     final title =
                         report['title'] as String?; // Handle null value
-                    final details =
-                        report['details'] as String?; // Handle null value
+                    final description =
+                        report['description'] as String?; // Handle null value
+                    // final location =
+                    //     report['location'] as String?; // Handle null value
 
                     return GestureDetector(
                       onTap: () {
@@ -112,7 +116,8 @@ class HomePage extends StatelessWidget {
                             builder: (context) => ReportDetailsPage(
                               imageURL: imageURL ?? '',
                               title: title ?? '',
-                              details: details ?? '',
+                              description: description ?? '',
+                              // location: location ?? '',
                             ),
                           ),
                         );
@@ -123,7 +128,7 @@ class HomePage extends StatelessWidget {
                               ? Image.network(imageURL)
                               : const SizedBox(),
                           title: Text(title ?? 'No Title'),
-                          subtitle: Text(details ?? 'No Details'),
+                          subtitle: Text(description ?? 'No Details'),
                         ),
                       ),
                     );
@@ -133,7 +138,7 @@ class HomePage extends StatelessWidget {
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('Error retrieving data');
+          return const Text('Error retrieving data');
         } else {
           return const CircularProgressIndicator();
         }
@@ -145,13 +150,15 @@ class HomePage extends StatelessWidget {
 class ReportDetailsPage extends StatefulWidget {
   final String imageURL;
   final String title;
-  final String details;
+  final String description;
+  // final String location;
 
-  ReportDetailsPage({
+  const ReportDetailsPage({
     Key? key,
     required this.title,
-    required this.details,
+    required this.description,
     required this.imageURL,
+    // required this.location,
   }) : super(key: key);
 
   @override
@@ -165,7 +172,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report Details'),
+        title: const Text('Report Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -173,7 +180,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             widget.imageURL.isNotEmpty
-                ? Container(
+                ? SizedBox(
                     width: 450,
                     height: 450,
                     child: Image.network(
@@ -187,8 +194,10 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
               'Title: ${widget.title}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            Text('Details: ${widget.details}'),
+            const SizedBox(height: 16),
+            Text('Details: ${widget.description}'),
+            const SizedBox(height: 16),
+            // Text('Location: ${widget.location}'),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: SwipeableButtonView(
@@ -199,7 +208,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
                       color: Color.fromARGB(255, 0, 140, 255),
                     ),
                   ),
-                  activeColor: Color.fromARGB(255, 0, 140, 255),
+                  activeColor: const Color.fromARGB(255, 0, 140, 255),
                   isFinished: isFinished,
                   onWaitingProcess: () {
                     Future.delayed(const Duration(seconds: 2), () {
@@ -230,9 +239,11 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
 }
 
 class ReportsPage extends StatelessWidget {
+  const ReportsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('Reports Page'),
     );
   }
