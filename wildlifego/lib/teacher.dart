@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 import 'login.dart';
 
@@ -141,17 +142,24 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class ReportDetailsPage extends StatelessWidget {
+class ReportDetailsPage extends StatefulWidget {
   final String imageURL;
   final String title;
   final String details;
 
-  const ReportDetailsPage({
+  ReportDetailsPage({
     Key? key,
     required this.title,
     required this.details,
     required this.imageURL,
   }) : super(key: key);
+
+  @override
+  _ReportDetailsPageState createState() => _ReportDetailsPageState();
+}
+
+class _ReportDetailsPageState extends State<ReportDetailsPage> {
+  bool isFinished = false;
 
   @override
   Widget build(BuildContext context) {
@@ -164,22 +172,56 @@ class ReportDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            imageURL.isNotEmpty
+            widget.imageURL.isNotEmpty
                 ? Container(
                     width: 450,
                     height: 450,
                     child: Image.network(
-                      imageURL,
+                      widget.imageURL,
                       fit: BoxFit.cover,
-                    ))
+                    ),
+                  )
                 : const SizedBox(),
             const SizedBox(height: 16),
             Text(
-              'Title: $title',
+              'Title: ${widget.title}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text('Details: $details'),
+            Text('Details: ${widget.details}'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: SwipeableButtonView(
+                  buttonText: "Done Inspections",
+                  buttonWidget: Container(
+                    child: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Color.fromARGB(255, 0, 140, 255),
+                    ),
+                  ),
+                  activeColor: Color.fromARGB(255, 0, 140, 255),
+                  isFinished: isFinished,
+                  onWaitingProcess: () {
+                    Future.delayed(const Duration(seconds: 2), () {
+                      setState(() {
+                        isFinished = true;
+                      });
+                    });
+                  },
+                  onFinish: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Teacher(),
+                      ),
+                    );
+                  },
+                  buttontextstyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+            )
           ],
         ),
       ),
