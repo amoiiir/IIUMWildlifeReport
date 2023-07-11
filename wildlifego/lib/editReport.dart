@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EditReportPage extends StatefulWidget {
   final String reportId;
@@ -45,6 +46,52 @@ class _EditReportPageState extends State<EditReportPage> {
     super.dispose();
   }
 
+  Future<void> updateReport(
+  String reportId,
+  String newTitle,
+  String newAnimalType,
+  String newLocation,
+  String newDescription,
+  ) async {
+    try {
+      // // Reference the report document in Firebase Firestore
+      // DocumentReference reportRef =
+      // FirebaseFirestore.instance.collection('AllReports').where(reportId, isEqualTo: reportId) as DocumentReference<Object?>;
+      
+      // // Update the fields with the new values
+      // await reportRef.update({
+      //   'title': newTitle,
+      //   'animalType': newAnimalType,
+      //   'location': newLocation,
+      //   'description': newDescription,
+      // });
+
+      CollectionReference reportsRef = FirebaseFirestore.instance.collection('AllReports');
+
+QuerySnapshot querySnapshot = await reportsRef.where('reportId', isEqualTo: reportId).get();
+
+if (querySnapshot.docs.isNotEmpty) {
+  DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+  DocumentReference reportRef = reportsRef.doc(documentSnapshot.id);
+
+  await reportRef.update({
+    'title': newTitle,
+    'animalType': newAnimalType,
+    'location': newLocation,
+    'description': newDescription,
+  });
+
+      print('Report updated successfully');
+    } else {
+      print('No matching documents found');
+    }
+
+      print('Report updated successfully');
+    } catch (e) {
+      print('Error updating report: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +113,7 @@ class _EditReportPageState extends State<EditReportPage> {
               decoration: const InputDecoration(labelText: 'Title'),
               onChanged: (value) {
                 setState(() {
-                  // Update the new value in the state
+                  
                 });
               },
             ),
@@ -97,18 +144,23 @@ class _EditReportPageState extends State<EditReportPage> {
               maxLines: 3,
               onChanged: (value) {
                 setState(() {
-                  // Update the new value in the state
                 });
               },
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Perform the update operation with the new values
                 String newTitle = _titleController.text;
                 String newAnimalType = _animalTypeController.text;
                 String newLocation = _locationController.text;
                 String newDescription = _descriptionController.text;
+
+                updateReport(
+                  widget.reportId,
+                  newTitle,
+                  newAnimalType,
+                  newLocation,
+                  newDescription,);
 
                 Navigator.pop(context);
               },

@@ -161,6 +161,7 @@ class _StudentState extends State<Student> {
                     itemCount: reports.length,
                     itemBuilder: (context, index) {
                       final report = reports[index].data();
+                      final reportID = report['reportId'] as String?;
                       final userID =
                           report['userId'] as String?; // Handle null value
                       final animalType =
@@ -181,6 +182,7 @@ class _StudentState extends State<Student> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReportDetailsPage(
+                                reportID: reportID ?? '',
                                 userID: userID ?? '',
                                 animalType: animalType ?? '',
                                 imageURL: imageURL ?? '',
@@ -218,6 +220,8 @@ class _StudentState extends State<Student> {
 }
 
 class ReportDetailsPage extends StatefulWidget {
+  
+  final String reportID;
   final String userID;
   final String animalType;
   final String imageURL;
@@ -227,6 +231,7 @@ class ReportDetailsPage extends StatefulWidget {
 
   const ReportDetailsPage({
     Key? key,
+    required this.reportID,
     required this.userID,
     required this.animalType,
     required this.title,
@@ -284,7 +289,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditReportPage(
-                        reportId : widget.userID,
+                        reportId : widget.reportID,
                         originalTitle : widget.title,
                         originalAnimalType : widget.animalType,
                         originalLocation : widget.location,
