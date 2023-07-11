@@ -116,7 +116,6 @@ class _FormScreenState extends State<FormScreen> {
                   visible: _isUploading, // Show the progress bar only when uploading
                   child: LinearProgressIndicator(value: _progress, minHeight: 20),
                 ),
-                Text('User Email: $_userEmail'),
                 Center(
                   child: SizedBox(
                     width: 256,
