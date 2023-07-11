@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/student.dart';
 
 class FormScreen extends StatefulWidget {
   final File imageFile;
-  //final String imageFile;
 
   const FormScreen({Key? key, required this.imageFile}) : super(key: key);
 
@@ -15,10 +15,25 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
-  UploadTask? _uploadTask;
-  double _progress = 0.0;
+  bool _isUploading = false; // Flag to track if the file is being uploaded
+  double _progress = 0.0; // Progress of the upload task
+
+  final _formKey = GlobalKey<FormState>();
+  String? _title;
+  String? _animalType;
+  String? _location;
+  String? _description;
+
+  String? getCurrentUserId() {
+    final user = FirebaseAuth.instance.currentUser;
+    return user?.uid;
+  }
 
   Future<void> uploadFile() async {
+    setState(() {
+      _isUploading = true;
+    });
+
     try {
       // Create a reference to the image file in Firebase Storage
       String fileName = DateTime.now().toString();
@@ -26,10 +41,10 @@ class _FormScreenState extends State<FormScreen> {
           FirebaseStorage.instance.ref().child('images/$fileName');
 
       // Upload the file to Firebase Storage
-      _uploadTask = reference.putFile(widget.imageFile);
+      UploadTask uploadTask = reference.putFile(widget.imageFile);
 
       // Listen to the task state changes to track the progress
-      _uploadTask!.snapshotEvents.listen((TaskSnapshot snapshot) {
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
         setState(() {
           _progress =
               snapshot.bytesTransferred / snapshot.totalBytes.toDouble();
@@ -37,7 +52,7 @@ class _FormScreenState extends State<FormScreen> {
       });
 
       // Wait for the upload task to complete
-      await _uploadTask!.whenComplete(() {
+      await uploadTask.whenComplete(() {
         print('File uploaded successfully');
         // Navigate back to the home page after the progress is complete
         Navigator.popUntil(context, ModalRoute.withName('/'));
@@ -46,18 +61,36 @@ class _FormScreenState extends State<FormScreen> {
       // Get the download URL of the uploaded file
       String downloadURL = await reference.getDownloadURL();
 
-      // Print the download URL
-      print('Download URL: $downloadURL');
+      // Create a data object containing the uploaded file details and other form fields
+      Map<String, dynamic> reportData = {
+        'userId': getCurrentUserId(),
+        'title': _title,
+        'animalType': _animalType,
+        'location': _location,
+        'description': _description,
+        'imageURL': downloadURL,
+      };
+
+      // Upload the data object to Firebase Firestore or Realtime Database
+      await FirebaseFirestore.instance
+          .collection('AllReports')
+          .add(reportData);
+
+      // Navigate to the Student screen after successful submission
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Student(),
+        ),
+      );
     } catch (e) {
       print('Error uploading file: $e');
+    } finally {
+      setState(() {
+        _isUploading = false;
+      });
     }
   }
-
-  final _formKey = GlobalKey<FormState>();
-  String? _title;
-  String? _animalType;
-  String? _location;
-  String? _description;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +102,8 @@ class _FormScreenState extends State<FormScreen> {
             child: Column(
               children: [
                 Visibility(
-                  visible: _uploadTask != null,
-                  child:
-                      LinearProgressIndicator(value: _progress, minHeight: 20),
+                  visible: _isUploading, // Show the progress bar only when uploading
+                  child: LinearProgressIndicator(value: _progress, minHeight: 20),
                 ),
                 Center(
                   child: SizedBox(
@@ -144,56 +176,13 @@ class _FormScreenState extends State<FormScreen> {
                           child: FloatingActionButton.large(
                             backgroundColor: Colors.white,
                             onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
+                              if (!_isUploading && _formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-
-                                // Save the form fields
-                                String title = _title!;
-                                String animalType = _animalType!;
-                                String location = _location!;
-                                String description = _description!;
-
-                                // Create a reference to the image file in Firebase Storage
-                                String fileName = DateTime.now().toString();
-                                Reference reference = FirebaseStorage.instance
-                                    .ref()
-                                    .child('images/$fileName');
-
-                                // Upload the file to Firebase Storage
-                                UploadTask uploadTask =
-                                    reference.putFile(widget.imageFile);
-
-                                // Wait for the upload task to complete
-                                TaskSnapshot taskSnapshot = await uploadTask;
-                                print('File uploaded successfully');
-
-                                // Get the download URL of the uploaded file
-                                String downloadURL =
-                                    await reference.getDownloadURL();
-
-                                // Create a data object containing the uploaded file details and other form fields
-                                Map<String, dynamic> reportData = {
-                                  'title': title,
-                                  'animalType': animalType,
-                                  'location': location,
-                                  'description': description,
-                                  'imageURL': downloadURL,
-                                };
-
-                                // Upload the data object to Firebase Firestore or Realtime Database
-                                // Replace the `collectionName` with your desired collection name
-                                await FirebaseFirestore.instance
-                                    .collection('AllReports')
-                                    .add(reportData);
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Student(), // Replace with your actual Student screen widget
-                                  ),
-                                );
+                                uploadFile();
                               }
+                              MaterialPageRoute(
+                                builder: (context) => const Student(),
+                              );
                             },
                             child: const Icon(Icons.done, color: Colors.black),
                           ),
