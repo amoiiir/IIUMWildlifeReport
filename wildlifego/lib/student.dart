@@ -161,7 +161,7 @@ class _StudentState extends State<Student> {
                     itemBuilder: (context, index) {
                       final report = reports[index].data();
                       final userID =
-                          report['userID'] as String?; // Handle null value
+                          report['userId'] as String?; // Handle null value
                       final animalType =
                           report['animalType'] as String?; // Handle null value
                       final imageURL =
