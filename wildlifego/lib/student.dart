@@ -150,12 +150,28 @@ class _StudentState extends State<Student> {
           final report = reports[index].data();
           final imageURL = report['imageURL'] as String?; // Handle null value
           final title = report['title'] as String?; // Handle null value
-          final details = report['details'] as String?; // Handle null value
+          final animalType = report['animalType'] as String?; // Handle null value
+          final location = report['location'] as String?; // Handle null value
+          final description = report['description'] as String?; // Handle null value
+          //final details = report['details'] as String?; // Handle null value
 
           return ListTile(
-            leading: imageURL != null ? Image.network(imageURL) : const SizedBox(),
-            title: Text(title ?? 'No Title'),
-            subtitle: Text(details ?? 'No Details'),
+            leading: Container(
+              child: imageURL != null ? Image.network(imageURL) : const SizedBox(),
+            ),
+            
+            // title: Text(title ?? 'No Title'),
+            // subtitle: Text(animalType ?? 'No Animal Type'),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title ?? 'Untitled'),
+                Text(animalType ?? 'No Animal Type'),
+                Text(location ?? 'No Location'),
+                Text(description ?? 'No Description'),
+              ],
+            ),
+            //subtitle: Text(details ?? 'No Details'),
           );
         },
       );
