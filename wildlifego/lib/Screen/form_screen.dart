@@ -19,14 +19,25 @@ class _FormScreenState extends State<FormScreen> {
   double _progress = 0.0; // Progress of the upload task
 
   final _formKey = GlobalKey<FormState>();
+  late String _userEmail;
   String? _title;
   String? _animalType;
   String? _location;
   String? _description;
 
-  String? getCurrentUserId() {
+  @override
+  void initState() {
+    super.initState();
+    _getUserEmail();
+  }
+
+  void _getUserEmail() {
     final user = FirebaseAuth.instance.currentUser;
-    return user?.uid;
+    if (user != null) {
+      setState(() {
+        _userEmail = user.email!;
+      });
+    }
   }
 
   Future<void> uploadFile() async {
@@ -63,7 +74,7 @@ class _FormScreenState extends State<FormScreen> {
 
       // Create a data object containing the uploaded file details and other form fields
       Map<String, dynamic> reportData = {
-        'userId': getCurrentUserId(),
+        'userId': _userEmail,
         'title': _title,
         'animalType': _animalType,
         'location': _location,
@@ -105,6 +116,7 @@ class _FormScreenState extends State<FormScreen> {
                   visible: _isUploading, // Show the progress bar only when uploading
                   child: LinearProgressIndicator(value: _progress, minHeight: 20),
                 ),
+                Text('User Email: $_userEmail'),
                 Center(
                   child: SizedBox(
                     width: 256,
