@@ -110,10 +110,6 @@ class _EditReportPageState extends State<EditReportPage> {
                 String newLocation = _locationController.text;
                 String newDescription = _descriptionController.text;
 
-                // You can update the report in Firebase or any other data source here
-                // Use the widget.reportId and the new values to perform the update
-
-                // After the update is successful, you can navigate back to the previous screen
                 Navigator.pop(context);
               },
               child: const Text('Save Changes'),
