@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 51, 55, 85),
+        primaryColor: const Color.fromARGB(255, 51, 55, 85),
       ),
       home: const Register(),
     );

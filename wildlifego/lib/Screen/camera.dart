@@ -6,7 +6,7 @@ import 'package:wildlifego/Screen/camera_screen.dart';
 class CameraPage extends StatefulWidget {
   final CameraController cameraController;
 
-  const CameraPage({required this.cameraController});
+  const CameraPage({super.key, required this.cameraController});
 
   @override
   _CameraPageState createState() => _CameraPageState();
@@ -43,12 +43,12 @@ class _CameraPageState extends State<CameraPage> {
       ),
       body: Stack(
         children: <Widget>[
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: CameraPreview(widget.cameraController),
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child : Align(
