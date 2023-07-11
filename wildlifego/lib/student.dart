@@ -145,36 +145,50 @@ class _StudentState extends State<Student> {
     if (snapshot.hasData) {
       final reports = snapshot.data!.docs;
       return ListView.builder(
-        itemCount: reports.length,
-        itemBuilder: (context, index) {
-          final report = reports[index].data();
-          final imageURL = report['imageURL'] as String?; // Handle null value
-          final title = report['title'] as String?; // Handle null value
-          final animalType = report['animalType'] as String?; // Handle null value
-          final location = report['location'] as String?; // Handle null value
-          final description = report['description'] as String?; // Handle null value
-          //final details = report['details'] as String?; // Handle null value
+  padding: EdgeInsets.all(10),
+  itemCount: reports.length,
+  itemBuilder: (context, index) {
+    final report = reports[index].data();
+    final imageURL = report['imageURL'] as String?;
+    final title = report['title'] as String?;
+    final animalType = report['animalType'] as String?;
+    final location = report['location'] as String?;
+    final description = report['description'] as String?;
 
-          return ListTile(
-            leading: Container(
-              child: imageURL != null ? Image.network(imageURL) : const SizedBox(),
-            ),
-            
-            // title: Text(title ?? 'No Title'),
-            // subtitle: Text(animalType ?? 'No Animal Type'),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title ?? 'Untitled'),
-                Text(animalType ?? 'No Animal Type'),
-                Text(location ?? 'No Location'),
-                Text(description ?? 'No Description'),
-              ],
-            ),
-            //subtitle: Text(details ?? 'No Details'),
-          );
-        },
-      );
+    return Column(
+      children: [
+        ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          tileColor: Colors.blueGrey[50],
+          contentPadding: const EdgeInsets.all(10),
+          leading: Container(
+            width: 120,
+            height: 120,
+            child: imageURL != null
+                ? Image.network(
+                    imageURL,
+                    fit: BoxFit.cover,
+                  )
+                : const SizedBox(),
+          ),
+          title: Text(title ?? 'Untitled'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Animal Type: $animalType" ?? 'No Animal Type'),
+              Text("Location: $location" ?? 'No Location'),
+              Text("Description: $description" ?? 'No Description'),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10), // Add padding between each ListTile
+      ],
+    );
+  },
+);
+
     } else if (snapshot.hasError) {
       return Text('Error retrieving data');
     } else {
