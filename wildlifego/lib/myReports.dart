@@ -5,12 +5,11 @@ import 'package:wildlifego/login.dart';
 import 'package:camera/camera.dart';
 import 'Screen/camera.dart';
 import 'editReport.dart';
-import 'myReports.dart';
 
-class Student extends StatefulWidget {
-  const Student({Key? key}) : super(key: key);
+class MyReportsPage extends StatefulWidget {
+  const MyReportsPage({Key? key}) : super(key: key);
   @override
-  State<Student> createState() => _StudentState();
+  State<MyReportsPage> createState() => _myReportsState();
 }
 
 Future<void> logout(BuildContext context) async {
@@ -23,7 +22,7 @@ Future<void> logout(BuildContext context) async {
   );
 }
 
-class _StudentState extends State<Student> {
+class _myReportsState extends State<MyReportsPage> {
   late List<CameraDescription> cameras;
   late CameraController _cameraController;
   bool _isCameraInitialized = false;
@@ -139,7 +138,11 @@ class _StudentState extends State<Student> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('AllReports').snapshots(),
+      stream: FirebaseFirestore.instance
+      .collection('AllReports')
+      .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+      .snapshots(),
+        
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final reports = snapshot.data!.docs;
@@ -149,7 +152,7 @@ class _StudentState extends State<Student> {
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Latest Reports',
+                    'My Reports',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -176,23 +179,23 @@ class _StudentState extends State<Student> {
                           report['location'] as String?; // Handle null value
 
                       return GestureDetector(
-                        // onTap: () {
-                        //   // Navigate to details page and pass the report details
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => ReportDetailsPage(
-                        //         reportID: reportID ?? '',
-                        //         userID: userID ?? '',
-                        //         animalType: animalType ?? '',
-                        //         imageURL: imageURL ?? '',
-                        //         title: title ?? '',
-                        //         description: description ?? '',
-                        //         location: location ?? '',
-                        //       ),
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () {
+                          // Navigate to details page and pass the report details
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportDetailsPage(
+                                reportID: reportID ?? '',
+                                userID: userID ?? '',
+                                animalType: animalType ?? '',
+                                imageURL: imageURL ?? '',
+                                title: title ?? '',
+                                description: description ?? '',
+                                location: location ?? '',
+                              ),
+                            ),
+                          );
+                        },
                         child: Card(
                           child: ListTile(
                             leading: imageURL != null
