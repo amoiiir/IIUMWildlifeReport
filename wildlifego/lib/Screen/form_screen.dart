@@ -20,6 +20,7 @@ class _FormScreenState extends State<FormScreen> {
 
   final _formKey = GlobalKey<FormState>();
   late String _userEmail;
+  late String _reportId;
   String? _title;
   String? _animalType;
   String? _location;
@@ -40,6 +41,12 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
+  void _setReportId() {
+    setState(() {
+      _reportId = FirebaseFirestore.instance.collection('reports').doc().id;
+    });
+  }
+
   Future<void> uploadFile() async {
     setState(() {
       _isUploading = true;
@@ -48,6 +55,7 @@ class _FormScreenState extends State<FormScreen> {
     try {
       // Create a reference to the image file in Firebase Storage
       String fileName = DateTime.now().toString();
+      _setReportId();
       Reference reference =
           FirebaseStorage.instance.ref().child('images/$fileName');
 
@@ -65,8 +73,6 @@ class _FormScreenState extends State<FormScreen> {
       // Wait for the upload task to complete
       await uploadTask.whenComplete(() {
         print('File uploaded successfully');
-        // Navigate back to the home page after the progress is complete
-        Navigator.popUntil(context, ModalRoute.withName('/'));
       });
 
       // Get the download URL of the uploaded file
@@ -74,6 +80,7 @@ class _FormScreenState extends State<FormScreen> {
 
       // Create a data object containing the uploaded file details and other form fields
       Map<String, dynamic> reportData = {
+        'reportId': _reportId,
         'userId': _userEmail,
         'title': _title,
         'animalType': _animalType,
@@ -83,9 +90,7 @@ class _FormScreenState extends State<FormScreen> {
       };
 
       // Upload the data object to Firebase Firestore or Realtime Database
-      await FirebaseFirestore.instance
-          .collection('AllReports')
-          .add(reportData);
+      await FirebaseFirestore.instance.collection('AllReports').add(reportData);
 
       // Navigate to the Student screen after successful submission
       Navigator.push(
@@ -113,9 +118,12 @@ class _FormScreenState extends State<FormScreen> {
             child: Column(
               children: [
                 Visibility(
-                  visible: _isUploading, // Show the progress bar only when uploading
-                  child: LinearProgressIndicator(value: _progress, minHeight: 20),
+                  visible:
+                      _isUploading, // Show the progress bar only when uploading
+                  child:
+                      LinearProgressIndicator(value: _progress, minHeight: 20),
                 ),
+                // Text('User Email: $_userEmail'),
                 Center(
                   child: SizedBox(
                     width: 256,
@@ -211,7 +219,8 @@ class _FormScreenState extends State<FormScreen> {
                           child: FloatingActionButton.large(
                             backgroundColor: Colors.white,
                             onPressed: () async {
-                              if (!_isUploading && _formKey.currentState!.validate()) {
+                              if (!_isUploading &&
+                                  _formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 uploadFile();
                               }

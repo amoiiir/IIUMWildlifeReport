@@ -10,6 +10,7 @@ List<CameraDescription> cameras = [];
 List<Widget> imageWidgets = [];
 
 class Report {
+  final String reportId;
   final String userId;
   final String title;
   final String animalType;
@@ -18,6 +19,7 @@ class Report {
   final File imageFile;
 
   Report({
+    required this.reportId,
     required this.userId,
     required this.title,
     required this.animalType,
