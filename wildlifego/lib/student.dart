@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wildlifego/login.dart';
 import 'package:camera/camera.dart';
 import 'Screen/camera.dart';
+import 'editReport.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
@@ -279,12 +280,18 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EditReportScreen(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditReportPage(
+                        reportId : widget.userID,
+                        originalTitle : widget.title,
+                        originalAnimalType : widget.animalType,
+                        originalLocation : widget.location,
+                        originalDescription : widget.description,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text('Edit Report'),
               ),

@@ -20,6 +20,7 @@ class _FormScreenState extends State<FormScreen> {
 
   final _formKey = GlobalKey<FormState>();
   late String _userEmail;
+  late String _reportId;
   String? _title;
   String? _animalType;
   String? _location;
@@ -40,6 +41,12 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
+  void _setReportId() {
+    setState(() {
+      _reportId = FirebaseFirestore.instance.collection('reports').doc().id;
+    });
+  }
+
   Future<void> uploadFile() async {
     setState(() {
       _isUploading = true;
@@ -48,6 +55,7 @@ class _FormScreenState extends State<FormScreen> {
     try {
       // Create a reference to the image file in Firebase Storage
       String fileName = DateTime.now().toString();
+      _setReportId();
       Reference reference =
           FirebaseStorage.instance.ref().child('images/$fileName');
 
@@ -72,6 +80,7 @@ class _FormScreenState extends State<FormScreen> {
 
       // Create a data object containing the uploaded file details and other form fields
       Map<String, dynamic> reportData = {
+        'reportId': _reportId,
         'userId': _userEmail,
         'title': _title,
         'animalType': _animalType,
