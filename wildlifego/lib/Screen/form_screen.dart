@@ -138,6 +138,12 @@ class _FormScreenState extends State<FormScreen> {
                             labelText: 'Title',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a title';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             _title = value;
                           },
@@ -150,6 +156,12 @@ class _FormScreenState extends State<FormScreen> {
                             labelText: 'Animal Type',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter an animal type';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             _animalType = value;
                           },
@@ -162,6 +174,12 @@ class _FormScreenState extends State<FormScreen> {
                             labelText: 'Location',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a location';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             _location = value;
                           },
@@ -175,6 +193,12 @@ class _FormScreenState extends State<FormScreen> {
                             border: OutlineInputBorder(),
                           ),
                           maxLines: 3,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a description';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             _description = value;
                           },
@@ -192,9 +216,6 @@ class _FormScreenState extends State<FormScreen> {
                                 _formKey.currentState!.save();
                                 uploadFile();
                               }
-                              MaterialPageRoute(
-                                builder: (context) => const Student(),
-                              );
                             },
                             child: const Icon(Icons.done, color: Colors.black),
                           ),

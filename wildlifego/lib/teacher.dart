@@ -98,16 +98,18 @@ class HomePage extends StatelessWidget {
                   itemCount: reports.length,
                   itemBuilder: (context, index) {
                     final report = reports[index].data();
-                    // final animalType =
-                    //     report['animalType'] as String?; // Handle null value
+                    final userID =
+                        report['userID'] as String?; // Handle null value
+                    final animalType =
+                        report['animalType'] as String?; // Handle null value
                     final imageURL =
                         report['imageURL'] as String?; // Handle null value
                     final title =
                         report['title'] as String?; // Handle null value
                     final description =
                         report['description'] as String?; // Handle null value
-                    // final location =
-                    //     report['location'] as String?; // Handle null value
+                    final location =
+                        report['location'] as String?; // Handle null value
 
                     return GestureDetector(
                       onTap: () {
@@ -116,11 +118,12 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ReportDetailsPage(
-                              // animalType: animalType ?? '',
+                              userID: userID ?? '',
+                              animalType: animalType ?? '',
                               imageURL: imageURL ?? '',
                               title: title ?? '',
                               description: description ?? '',
-                              // location: location ?? '',
+                              location: location ?? '',
                             ),
                           ),
                         );
@@ -151,19 +154,21 @@ class HomePage extends StatelessWidget {
 }
 
 class ReportDetailsPage extends StatefulWidget {
+  final String userID;
+  final String animalType;
   final String imageURL;
   final String title;
   final String description;
-  // final String animalType;
-  // final String location;
+  final String location;
 
   const ReportDetailsPage({
     Key? key,
+    required this.userID,
+    required this.animalType,
     required this.title,
     required this.description,
     required this.imageURL,
-    // required this.animalType,
-    // required this.location,
+    required this.location,
   }) : super(key: key);
 
   @override
@@ -226,12 +231,17 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
             const SizedBox(height: 16),
             Text(
               'Title: ${widget.title}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
+            Text('Animal Type: ${widget.animalType}'),
+            const SizedBox(height: 10),
+            Text('By: ${widget.userID}'),
+            const SizedBox(height: 10),
             Text('Details: ${widget.description}'),
-            const SizedBox(height: 16),
-            // Text('Animal Type: ${widget.animalType}'),
+            const SizedBox(height: 10),
+            Text('Location: ${widget.location}'),
+            const SizedBox(height: 10),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,

@@ -33,8 +33,7 @@ class _StudentState extends State<Student> {
 
   Future<void> initializeCamera() async {
     cameras = await availableCameras();
-    _cameraController =
-        CameraController(cameras[0], ResolutionPreset.ultraHigh);
+    _cameraController = CameraController(cameras[0], ResolutionPreset.medium);
     await _cameraController.initialize();
     if (!mounted) return;
     setState(() {
@@ -231,7 +230,7 @@ class ReportDetailsPage extends StatefulWidget {
     required this.title,
     required this.description,
     required this.imageURL,
-    required this.location, 
+    required this.location,
   }) : super(key: key);
   @override
   _ReportDetailsPageState createState() => _ReportDetailsPageState();
@@ -265,7 +264,8 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
               const SizedBox(height: 16),
               Text(
                 'Title: ${widget.title}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const SizedBox(height: 10),
               Text('Animal Type: ${widget.animalType}'),
@@ -294,4 +294,3 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
     );
   }
 }
-
