@@ -98,6 +98,8 @@ class HomePage extends StatelessWidget {
                   itemCount: reports.length,
                   itemBuilder: (context, index) {
                     final report = reports[index].data();
+                    // final animalType =
+                    //     report['animalType'] as String?; // Handle null value
                     final imageURL =
                         report['imageURL'] as String?; // Handle null value
                     final title =
@@ -114,6 +116,7 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ReportDetailsPage(
+                              // animalType: animalType ?? '',
                               imageURL: imageURL ?? '',
                               title: title ?? '',
                               description: description ?? '',
@@ -151,6 +154,7 @@ class ReportDetailsPage extends StatefulWidget {
   final String imageURL;
   final String title;
   final String description;
+  // final String animalType;
   // final String location;
 
   const ReportDetailsPage({
@@ -158,6 +162,7 @@ class ReportDetailsPage extends StatefulWidget {
     required this.title,
     required this.description,
     required this.imageURL,
+    // required this.animalType,
     // required this.location,
   }) : super(key: key);
 
@@ -226,7 +231,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
             const SizedBox(height: 16),
             Text('Details: ${widget.description}'),
             const SizedBox(height: 16),
-            // Text('Location: ${widget.location}'),
+            // Text('Animal Type: ${widget.animalType}'),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,

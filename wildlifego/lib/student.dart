@@ -5,7 +5,7 @@ import 'package:wildlifego/login.dart';
 import 'package:camera/camera.dart';
 
 import 'Screen/camera.dart';
-import 'teacher.dart';
+import 'login.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _StudentState extends State<Student> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("WildLifeGO"),
+        title: const Text("WildLife GO"),
         actions: [
           IconButton(
             onPressed: () {
@@ -85,7 +85,7 @@ class _StudentState extends State<Student> {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 10.0,
-        child: SizedBox(
+        child: Container(
           height: 60.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +100,7 @@ class _StudentState extends State<Student> {
                         // currentTab = 0;
                       });
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -124,7 +124,7 @@ class _StudentState extends State<Student> {
                         // currentTab = 0;
                       });
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -146,127 +146,57 @@ class _StudentState extends State<Student> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final reports = snapshot.data!.docs;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'My Reports',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: reports.length,
-                    itemBuilder: (context, index) {
-                      final report = reports[index].data();
-                      final imageURL =
-                          report['imageURL'] as String?; // Handle null value
-                      final title =
-                          report['title'] as String?; // Handle null value
-                      final description =
-                          report['description'] as String?; // Handle null value
-                      // final location =
-                      //     report['location'] as String?; // Handle null value
+            return ListView.builder(
+              padding: EdgeInsets.all(10),
+              itemCount: reports.length,
+              itemBuilder: (context, index) {
+                final report = reports[index].data();
+                final imageURL = report['imageURL'] as String?;
+                final title = report['title'] as String?;
+                final animalType = report['animalType'] as String?;
+                final location = report['location'] as String?;
+                final description = report['description'] as String?;
 
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to details page and pass the report details
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ReportDetailsPage(
-                                imageURL: imageURL ?? '',
-                                title: title ?? '',
-                                description: description ?? '',
-                                // location: location ?? '',
-                              ),
-                            ),
-                          );
-                        },
-                        child: Card(
-                          child: ListTile(
-                            leading: imageURL != null
-                                ? Image.network(imageURL)
-                                : const SizedBox(),
-                            title: Text(title ?? 'No Title'),
-                            subtitle: Text(description ?? 'No Details'),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                return Column(
+                  children: [
+                    ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      tileColor: Colors.blueGrey[50],
+                      contentPadding: const EdgeInsets.all(10),
+                      leading: Container(
+                        width: 120,
+                        height: 120,
+                        child: imageURL != null
+                            ? Image.network(
+                                imageURL,
+                                fit: BoxFit.cover,
+                              )
+                            : const SizedBox(),
+                      ),
+                      title: Text(title ?? 'Untitled'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Animal Type: $animalType" ?? 'No Animal Type'),
+                          Text("Location: $location" ?? 'No Location'),
+                          Text("Description: $description" ?? 'No Description'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                        height: 10), // Add padding between each ListTile
+                  ],
+                );
+              },
             );
           } else if (snapshot.hasError) {
-            return const Text('Error retrieving data');
+            return Text('Error retrieving data');
           } else {
             return const CircularProgressIndicator();
           }
         },
-      ),
-    );
-  }
-}
-
-class ReportDetailsPage extends StatefulWidget {
-  final String imageURL;
-  final String title;
-  final String description;
-  // final String location;
-
-  const ReportDetailsPage({
-    Key? key,
-    required this.title,
-    required this.description,
-    required this.imageURL,
-    // required this.location,
-  }) : super(key: key);
-
-  @override
-  _ReportDetailsPageState createState() => _ReportDetailsPageState();
-}
-
-class _ReportDetailsPageState extends State<ReportDetailsPage> {
-  bool isFinished = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Report Details'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            widget.imageURL.isNotEmpty
-                ? SizedBox(
-                    width: 450,
-                    height: 450,
-                    child: Image.network(
-                      widget.imageURL,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : const SizedBox(),
-            const SizedBox(height: 16),
-            Text(
-              'Title: ${widget.title}',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            const SizedBox(height: 16),
-            Text('Details: ${widget.description}'),
-            // const SizedBox(height: 8),
-            // Text('Location: ${widget.location}'),
-          ],
-        ),
       ),
     );
   }
