@@ -44,5 +44,6 @@ Listed here is the main objectives of each of the project
 5. Flutter - Swipeable Button | Swipe to Confirm Button in Flutter | Swipe to confirm animation [2022] : https://youtu.be/SMIrms0jV9w
 6. Flutter Firebase CRUD (Create, Read, Update, Delete) : https://youtu.be/ErP_xomHKTw
 7. User Authentication and CRUD Operation with Firebase Realtime Database in Android : https://www.geeksforgeeks.org/user-authentication-and-crud-operation-with-firebase-realtime-database-in-android/
+8. Flutter Firebase CLI Setup : https://www.youtube.com/watch?v=G-mbqiE87Lw&t=37s
 
 
