@@ -1,5 +1,12 @@
 <h1>IIUM Wildlife Report</h1>
 
+<h2>Group Member</h2>
+
+1. Muhammad Amir Hamzah Bin Abd Aziz - 2011685 (Authentication, login and registration page, camera module, delete function)
+2. Muhammad Firdaus bin Shahrum - 2013803 (Report Class, Form Page, My Reports Page, Edit Report Page, Update report function)
+3. Faishal Aqil bin Mohd Arief - 2014883 (Firebase Configuration, Report Creation, Retrieval Data, Phone Gallery Connection)
+
+
 <h2>Introduction</h2>
 IIUM Wildlife Control is a mobile application designed exclusively for students of IIUM. With this app, students can easily report any wildlife-related problems they encounter within the IIUM campus. The app utilizes the device's camera to capture visual evidence and securely stores the reports in Firebase's cloud Firestore. 
 
