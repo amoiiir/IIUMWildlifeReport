@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wildlifego/Screen/camera_screen.dart';
 
 class CameraPage extends StatefulWidget {
@@ -23,6 +24,7 @@ class _CameraPageState extends State<CameraPage> {
     try {
       await widget.cameraController.startImageStream((CameraImage image) {
         // Handle camera image stream
+        
       });
     } catch (e) {
       print("Error starting camera stream: $e");
@@ -40,6 +42,25 @@ class _CameraPageState extends State<CameraPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Issue Report"),
+        actions: [
+    IconButton(
+      icon: const Icon(Icons.photo_library),
+      onPressed: () async {
+        final XFile? imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (imageFile != null) {
+          // Handle the selected image file
+          Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DisplayPictureScreen(
+                    imageFile: File(imageFile.path),
+                  ),
+                ),
+              );
+        }
+      },
+    ),
+  ],
       ),
       body: Stack(
         children: <Widget>[

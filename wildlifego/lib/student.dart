@@ -176,23 +176,23 @@ class _StudentState extends State<Student> {
                           report['location'] as String?; // Handle null value
 
                       return GestureDetector(
-                        // onTap: () {
-                        //   // Navigate to details page and pass the report details
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => ReportDetailsPage(
-                        //         reportID: reportID ?? '',
-                        //         userID: userID ?? '',
-                        //         animalType: animalType ?? '',
-                        //         imageURL: imageURL ?? '',
-                        //         title: title ?? '',
-                        //         description: description ?? '',
-                        //         location: location ?? '',
-                        //       ),
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () {
+                          // Navigate to details page and pass the report details
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ViewDetailsPage(
+                                reportID: reportID ?? '',
+                                userID: userID ?? '',
+                                animalType: animalType ?? '',
+                                imageURL: imageURL ?? '',
+                                title: title ?? '',
+                                description: description ?? '',
+                                location: location ?? '',
+                              ),
+                            ),
+                          );
+                        },
                         child: Card(
                           child: ListTile(
                             leading: imageURL != null
@@ -299,6 +299,82 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
                 },
                 child: const Text('Edit Report'),
               ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+//VIEW ONLY
+
+class ViewDetailsPage extends StatefulWidget {
+  final String reportID;
+  final String userID;
+  final String animalType;
+  final String imageURL;
+  final String title;
+  final String description;
+  final String location;
+
+  const ViewDetailsPage({
+    Key? key,
+    required this.reportID,
+    required this.userID,
+    required this.animalType,
+    required this.title,
+    required this.description,
+    required this.imageURL,
+    required this.location,
+  }) : super(key: key);
+  @override
+  _ViewDetailsPage createState() => _ViewDetailsPage();
+}
+
+
+
+class _ViewDetailsPage extends State<ViewDetailsPage> {
+  bool isFinished = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Report Details'),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: 1, // Only one item in the list
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.imageURL.isNotEmpty)
+                SizedBox(
+                  width: 450,
+                  height: 450,
+                  child: Image.network(
+                    widget.imageURL,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              const SizedBox(height: 16),
+              Text(
+                'Title: ${widget.title}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              const SizedBox(height: 10),
+              Text('Animal Type: ${widget.animalType}'),
+              const SizedBox(height: 10),
+              Text('By: ${widget.userID}'),
+              const SizedBox(height: 10),
+              Text('Details: ${widget.description}'),
+              const SizedBox(height: 10),
+              Text('Location: ${widget.location}'),
+              const SizedBox(height: 10),
+              
             ],
           );
         },
