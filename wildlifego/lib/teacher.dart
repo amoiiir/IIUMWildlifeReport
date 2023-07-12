@@ -37,24 +37,24 @@ class _TeacherState extends State<Teacher> {
         ],
       ),
       body: _pages[_selectedTabIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTabIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedTabIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Reports',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: _selectedTabIndex,
+      //   onTap: (index) {
+      //     setState(() {
+      //       _selectedTabIndex = index;
+      //     });
+      //   },
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.assignment),
+      //       label: 'Reports',
+      //     ),
+      //   ],
+      // ),
     );
   }
 
