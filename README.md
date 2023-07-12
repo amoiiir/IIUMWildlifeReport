@@ -10,8 +10,8 @@ Listed here is the main objectives of each of the project
 
 + Help students to report wildlife animal around campus
 + Students can provide evidence through the mobile application
-+ Students can create, update, delete their report.
-+ Officers can check the reports through the application
++ Students can create and update their report.
++ Officers can check the reports through the application.
 + They can approve each of the report and delete completed report.
 
 <h2>Features and Functionalities</h2>
