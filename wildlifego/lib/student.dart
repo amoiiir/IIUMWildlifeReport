@@ -93,6 +93,12 @@ class _StudentState extends State<Student> {
                   MaterialButton(
                     minWidth: 150,
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Student(),
+                        ),
+                      );
                     
                   },
                     child: const Column(

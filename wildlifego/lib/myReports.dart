@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wildlifego/login.dart';
 import 'package:camera/camera.dart';
+import 'package:wildlifego/student.dart';
 import 'Screen/camera.dart';
 import 'editReport.dart';
 
@@ -92,6 +93,12 @@ class _myReportsState extends State<MyReportsPage> {
                   MaterialButton(
                     minWidth: 150,
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Student(),
+                        ),
+                      );
                     
                   },
                     child: const Column(
