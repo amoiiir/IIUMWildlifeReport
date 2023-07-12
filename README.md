@@ -35,5 +35,6 @@ Listed here is the main objectives of each of the project
 3. Camera plug-ins : https://pub.dev/packages/camera
 4. Authentication plug-ins : https://pub.dev/packages/firebase_auth
 5. Flutter - Swipeable Button | Swipe to Confirm Button in Flutter | Swipe to confirm animation [2022] : https://youtu.be/SMIrms0jV9w
+6. Flutter Firebase CRUD (Create, Read, Update, Delete) : https://youtu.be/ErP_xomHKTw
 
 
