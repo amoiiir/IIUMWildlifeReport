@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //check the password
   bool _isObscure3 = true;
   bool visible = false;
   final _formkey = GlobalKey<FormState>();

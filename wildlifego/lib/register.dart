@@ -12,7 +12,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  _RegisterState();
+  _RegisterState(); //call instance of registerState
 
   bool showProgress = false;
   bool visible = false;
@@ -25,6 +25,8 @@ class _RegisterState extends State<Register> {
   final TextEditingController name = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController mobile = TextEditingController();
+
+  //check if password is valid
   bool _isObscure = true;
   bool _isObscure2 = true;
   File? file;
@@ -305,7 +307,9 @@ class _RegisterState extends State<Register> {
     const CircularProgressIndicator();
     if (_formkey.currentState!.validate()) {
       await _auth
+          //create new user account using email and password
           .createUserWithEmailAndPassword(email: email, password: password)
+          //save user details to firestore
           .then((value) => {postDetailsToFirestore(email, rool)})
           .catchError((e) {});
     }
@@ -313,8 +317,11 @@ class _RegisterState extends State<Register> {
 
   postDetailsToFirestore(String email, String rool) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    //retrieve current user from firebase
     var user = _auth.currentUser;
+    //pointing to the 'users' collection
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    //store email and rool to firestore
     ref.doc(user!.uid).set({'email': emailController.text, 'rool': rool});
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
