@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               color: Colors.lightBlue[100],
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.70,
+              height: MediaQuery.of(context).size.height,
               child: Center(
                 child: Container(
                   margin: const EdgeInsets.all(12),
@@ -111,7 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color.fromARGB(255, 252, 252, 252)),
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 252, 252, 252)),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: UnderlineInputBorder(
@@ -159,28 +160,34 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        MaterialButton(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
-                            ),
-                          ),
-                          elevation: 5.0,
-                          height: 40,
-                          onPressed: () {
-                            Navigator.pushReplacement(
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Register(),
+                                builder: (context) =>
+                                    const Register(), // Replace SignUpPage with the desired page to navigate to
                               ),
                             );
                           },
-                          color: Colors.blue[900],
-                          child: const Text(
-                            "Register Now",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                          child: RichText(
+                            text: const TextSpan(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                              text: "Don't have an account? ",
+                              children: [
+                                TextSpan(
+                                  text: "Sign Up",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.red,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
