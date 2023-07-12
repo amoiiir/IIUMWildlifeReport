@@ -24,7 +24,9 @@ Listed here is the main objectives of each of the project
 
 ![mobileapp drawio](https://github.com/amoiiir/IIUMWildlifeReport/assets/101052053/fed87221-4991-4913-a543-97072a697880)
 
-<h2>Screen implementatio and widget Diagrams</h2>
+<h2>Screen implementation and widget Diagrams</h2>
+
+![routing](https://github.com/amoiiir/IIUMWildlifeReport/assets/101052053/43257768-1e17-4031-9d2b-f3f8a128871b)
 
 <h2>References</h2>
 
@@ -32,5 +34,6 @@ Listed here is the main objectives of each of the project
 2. Flutter: Bottom Tab Bar Navigation with FAB Button : https://youtu.be/1y-gfskpMIM
 3. Camera plug-ins : https://pub.dev/packages/camera
 4. Authentication plug-ins : https://pub.dev/packages/firebase_auth
+5. Flutter - Swipeable Button | Swipe to Confirm Button in Flutter | Swipe to confirm animation [2022] : https://youtu.be/SMIrms0jV9w
 
 
