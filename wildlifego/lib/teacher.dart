@@ -129,14 +129,21 @@ class HomePage extends StatelessWidget {
                         );
                       },
                       child: Card(
-                        child: ListTile(
-                          leading: imageURL != null
-                              ? Image.network(imageURL)
-                              : const SizedBox(),
-                          title: Text(title ?? 'No Title'),
-                          subtitle: Text(description ?? 'No Details'),
+                          child: ListTile(
+                            leading: imageURL != null
+                                ? Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.network(
+                                      imageURL,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            title: Text(title ?? 'No Title'),
+                            subtitle: Text(description ?? 'No Details'),
+                          ),
                         ),
-                      ),
                     );
                   },
                 ),

@@ -206,7 +206,14 @@ class _myReportsState extends State<MyReportsPage> {
                         child: Card(
                           child: ListTile(
                             leading: imageURL != null
-                                ? Image.network(imageURL)
+                                ? Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.network(
+                                      imageURL,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
                                 : const SizedBox(),
                             title: Text(title ?? 'No Title'),
                             subtitle: Text(description ?? 'No Details'),
